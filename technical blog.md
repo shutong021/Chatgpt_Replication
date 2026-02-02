@@ -159,11 +159,11 @@ In addition to replicating table logic and method comparisons, our team emphasiz
 
 ### 7.2 Report and slides
 - `report/Replication Report.pdf`
-- `slides/` (presentation materials)
+- `slides/chatgpt_replication_slides_revised.pdf
 
 ---
 
-## 8) How to reproduce (end-to-end)
+## 8) How to reproduce
 
 > Prerequisite: licensed access to CapitalIQ/WRDS data and local exports.
 
