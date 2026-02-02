@@ -134,7 +134,8 @@ Run Python scripts in `code/`:
 - `Spark Pro(or Max).py`
 - `Keyword+Spark Max.py`
 
-They read the sample file (e.g., `Q&A.xlsx`) and generate the final tables in `output/`.
+### Step 4 — Generate Excel
+- `code/table_generator.py` — Reads local data/samples/Q&A.xlsx and generates output/TABLES(CUHK REPLICATION).xlsx
 
 ---
 
