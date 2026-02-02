@@ -12,14 +12,14 @@ estimation to be non-missing and to have at least five responses in the Q&A port
 
 
 cd"D:\2025_26 Spring\Replication\Data\Data clean"
-*有318015个uqiue transcript id
+*have 318015 uqiue transcript id
 use "TranscriptDetails.dta" ,clear
 duplicates drop cik,force
 
-*12614个公司(cik id)
+*12614 firms (cik id)
 keep if cik != ""
 
-*去除无行业信息的公司以及金融业与公共事业公司有5626个公司
+*Excluding companies without industry information, as well as financial and public utility companies, there are 5,626 companies.
 merge m:1 cik using "corporate information.dta"
 keep if _merge == 3
 drop _merge
@@ -30,7 +30,7 @@ keep transcriptid cik companyid
 duplicates drop cik,force
 save "Clean_1.dta",replace
 
-*去除了没有QA文件或QA responses少于5的会议，5547个公司，172633个会议。
+*Meetings without QA documentation or with fewer than 5 QA responses were removed; 5547 companies, 172633 meetings.
 use "a7fmiti4khrtfmi3.dta",clear
 merge m:1 cik using "Clean_1.dta"
 keep if _merge == 3
@@ -42,56 +42,56 @@ save "Clean_Q&A.dta",replace
 
 
 
-* 只保留问答（如果数据里还有其他类型，这句很有用）
+* only remain Q and A
 use "Clean_Q&A.dta",clear
 keep if inlist(transcriptcomponenttypename, "Question", "Answer")
 
-* 保留原始行顺序（非常关键）
+* keep orignal sequence
 gen long __seq = _n
 
-* 先按公司+call分组，并保持call内部原始顺序
+* sort by firm+call，keep internal call sequence
 sort cik transcriptid __seq
 
-* 每出现一个 Question，就让 qid +1；后面的 Answer 继承该 qid
+* For each Question that appears,，let qid +1；backword Answer inherit this qid
 by cik transcriptid: gen long qid = sum(transcriptcomponenttypename=="Question")
 
-* 如果开头有 Answer 但前面没 Question（异常），丢掉
+* If there's an "Answer" at the beginning but no "Question" (or "Abnormality") before it, discard it.
 drop if qid==0
 
-* 关键：后面要用 by cik transcriptid qid (__seq)，所以必须按这个顺序排一次
+*  by cik transcriptid qid (__seq)
 sort cik transcriptid qid __seq
 
-* 提取问题文本（只在 Question 行有值），并在该问题块内填充
+* Extract the question text (only values ​​exist in the Question line) and populate it within the question block.
 by cik transcriptid qid (__seq): gen strL question = componenttextpreview if transcriptcomponenttypename=="Question"
 by cik transcriptid qid: replace question = question[1]
 
-* 将同一个问题块内的所有 Answer 按顺序拼接
+* Concatenate all Answers within the same question block in order.
 gen strL answer = ""
 by cik transcriptid qid (__seq): replace answer = ///
     trim(cond(_n==1, "", answer[_n-1]) + " " + componenttextpreview) ///
     if transcriptcomponenttypename=="Answer"
 
-* 把"最终拼好的答案"（块内最后一行）复制给该块所有行（尤其是 Question 行）
+* Copy the "finally pieced-together answer" (the last line in the block) to all lines in the block (especially the Question line).
 by cik transcriptid qid: replace answer = answer[_N]
 
-* 只保留 Question 行 => 一问一行（带合并后的答案）
+* only save Question  => 1 q 1 row with merging answer
 keep if transcriptcomponenttypename=="Question"
 keep cik transcriptid qid question answer
 order cik transcriptid qid question answer
 
-* 统一把缺失当作空字符串（避免 length(.) 出问题）
+* Treat missing characters as empty strings
 replace question = "" if missing(question)
 replace answer   = "" if missing(answer)
 
-* 计算长度（Unicode 更稳：ustrlen；如果你确定全是英文也可用 strlen）
+* Calculate length
 gen q_len  = ustrlen(question)
 gen a_len  = ustrlen(answer)
 gen qa_len = ustrlen(question + answer)
 
-* 按你的三条规则筛选,最终是166848个pairs,5471家公司
+* 166848 pairs,5471 firms
 keep if q_len >= 30 & a_len >= 10 & qa_len >= 75
 
-* 随机排序，取前一千个作为最终数据，需要下载rsort包
+* To randomly sort the data and select the first 1000 as the final data, you need to download the rsort package.
 rsort
 save "Final.dta", replace
  
@@ -99,3 +99,4 @@ save "Final.dta", replace
 duplicates drop cik mostimportantdateutc,force
 duplicates drop cik,force
 */
+
