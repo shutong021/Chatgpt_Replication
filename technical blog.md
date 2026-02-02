@@ -46,7 +46,6 @@ Our replication uses licensed datasets downloaded from:
 - **CapitalIQ** (earnings call transcripts and identifiers), 2013–2022 calendar years
 - **Speaker/component-level “speaker details”** tables (Question/Answer tags, speaker type, component order)
 - **Corporate information** (industry classification; identifiers)
-- **WRDS/CRSP–Compustat fundamentals** (for firm-level linkage and possible downstream analysis)
 
 Because we cannot redistribute transcripts publicly and because API-based full-corpus collection is constrained,
 we focus on **faithfully reproducing the pipeline and table logic** on the data available to us.
@@ -147,8 +146,6 @@ In addition to replicating table logic and method comparisons, our team emphasiz
 - a two-stage “keyword + LLM” approach that is straightforward to explain in class,
 - unified table formatting for presentation consistency.
 
-(If we extend the project later, we can add: firm-level merges to fundamentals, heterogeneity by industry/time,
-and correlations with information environment proxies.)
 
 ---
 
@@ -193,22 +190,3 @@ Check:
 - evaluation performance tables match the numbers reported in `output/TABLES...xlsx`
 
 ---
-
-## 9) Presentation tips (what to emphasize in class)
-
-If time is limited, the clearest narrative is:
-1) Motivation: “sounds like answering but actually doesn’t”
-2) Why hard: context/semantics → rules struggle
-3) Data + sample construction: show Table 1 flow
-4) Methods: Gow (rules) vs LLM vs keyword+LLM (two-stage)
-5) Key takeaway: LLM + sensible prefilter can improve detection while controlling cost
-
----
-
-## 10) Checklist for final submission
-
-- [ ] Root `README.md` updated and consistent with repo structure
-- [ ] `data/README.md` documents local-only data and reproduction steps
-- [ ] `technical_blog.md` explains pipeline and deviations from original
-- [ ] `output/` contains final tables used in report/slides
-- [ ] No transcript text or licensed datasets committed to GitHub
