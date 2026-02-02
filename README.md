@@ -19,7 +19,7 @@ We replicate the **sample construction logic** and implement several **automated
 - `report/`
   - `Replication Report.pdf` — replication write-up
 - `slides/`
-  - presentation materials
+  - `chatgpt_replication_slides_revised.pdf`
 - `data/`
   - `README.md` — data sources, local folder convention, and reproduction instructions
 
