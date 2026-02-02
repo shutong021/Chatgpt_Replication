@@ -3,16 +3,10 @@ import numpy as np
 from pathlib import Path
 
 
-# =========================
-# 0) Paths
-# =========================
-IN_PATH = Path(r"Q&A.xlsx")  # 改成你的文件路径
+IN_PATH = Path(r"Q&A.xlsx")  
 OUT_PATH = Path(r"replication_table2_table3_results.xlsx")
 
 
-# =========================
-# 1) Helpers
-# =========================
 def to_binary_series(s: pd.Series) -> pd.Series:
     """Coerce to 0/1 with NaNs preserved. Accepts strings like '1','0','yes','no'."""
     x = s.copy()
@@ -117,9 +111,6 @@ def detect_prediction_columns(df: pd.DataFrame, manual_col: str) -> list:
     return [c for c in df.columns if c in pred_cols]
 
 
-# =========================
-# 2) Load
-# =========================
 df = pd.read_excel(IN_PATH, engine="openpyxl")
 df.columns = [str(c).strip() for c in df.columns]
 
@@ -132,9 +123,9 @@ if len(pred_cols) == 0:
     raise ValueError("No binary prediction columns detected (0/1).")
 
 
-# =========================
-# 3) Table 2 (was Table 1): Manual non-missing
-# =========================
+
+# Table 2 (was Table 1): Manual non-missing
+
 manual = to_binary_series(df[manual_col])
 df_eval = df.loc[manual.notna()].copy()
 
@@ -181,7 +172,7 @@ for c in pred_cols:
 confusion_df = pd.DataFrame(confusion_rows).set_index("Method")
 
 # Format Table 2 for Excel display (avoid dtype crash)
-table2_fmt = table2.copy().astype("object")  # ✅ 关键：允许 "" 和数值混放
+table2_fmt = table2.copy().astype("object")  
 
 for r in table2_rows:
     if r in ["Answer", "Non-answer", "N"]:
@@ -190,18 +181,18 @@ for r in table2_rows:
         table2_fmt.loc[r] = table2_fmt.loc[r].apply(lambda v: "" if pd.isna(v) else round(float(v), 2))
 
 
-# =========================
-# 4) Table 3 (was Table 2): Full sample, pair level only
-# =========================
+
+# Table 3 (was Table 2): Full sample, pair level only
+
 pair_stats = {}
 for c in pred_cols:
     pair_stats[f"{c} - % non-answer"] = desc_stats(to_binary_series(df[c]))
 table3_pair = pd.DataFrame(pair_stats).T
 
 
-# =========================
-# 5) Write Excel (Table2_eval, Confusion_eval, Table3_pair_level)
-# =========================
+
+# Write Excel (Table2_eval, Confusion_eval, Table3_pair_level)
+
 with pd.ExcelWriter(OUT_PATH, engine="openpyxl") as writer:
     table2_fmt.to_excel(writer, sheet_name="Table2_eval")
     confusion_df.to_excel(writer, sheet_name="Confusion_eval")
@@ -244,3 +235,4 @@ print(f"Saved: {OUT_PATH.resolve()}")
 print("Prediction columns used:", pred_cols)
 print("Manual non-missing rows for Table 2:", int(df[manual_col].notna().sum()))
 print("Full rows for Table 3:", len(df))
+
