@@ -6,7 +6,10 @@ This folder documents the datasets used in our replication project and explains
 (3) what is (not) included in the public GitHub repo due to licensing restrictions.
 
 > **Important note on redistribution**
-> Our raw transcripts and many firm-level datasets originate from licensed databases(e.g., Capital IQ and WRDS, CRSP). These materials are typically **not allowed** to be redistributed publicly. Therefore, this repository **does not** include full raw data or full cleaned datasets that contain proprietary transcript text.
+> Our raw transcripts and many firm-level datasets originate from licensed databases
+> (e.g., CapitalIQ and WRDS/CRSP-Compustat). These materials are typically **not allowed**
+> to be redistributed publicly. Therefore, this repository **does not** include full raw data
+> or full cleaned datasets that contain proprietary transcript text.
 
 ---
 
