@@ -14,6 +14,7 @@ We replicate the **sample construction logic** and implement several **automated
   - `Gow et al 2021.py` — rule-based baseline detection
   - `Spark Pro(or Max).py` — LLM-based classification (Spark)
   - `Keyword+Spark Max.py` — two-stage pipeline: keyword prefilter + Spark Max
+  - `Table+generator.py` — generate excel
 - `output/`
   - `TABLES (CUHK REPLICATION).xlsx` — final result tables for presentation/report
 - `report/`
@@ -22,6 +23,7 @@ We replicate the **sample construction logic** and implement several **automated
   - `chatgpt_replication_slides_revised.pdf`
 - `data/`
   - `README.md` — data sources, local folder convention, and reproduction instructions
+- `technical blog.md/` — Replication Notes & Pipeline
 
 ---
 
