@@ -5,7 +5,7 @@ This folder documents the datasets used in our replication project and explains
 (2) how the cleaned/final datasets are generated,
 (3) what is (not) included in the public GitHub repo due to licensing restrictions.
 
-> Important note on redistribution**
+> **Important note on redistribution**
 > Our raw transcripts and many firm-level datasets originate from licensed databases(e.g., Capital IQ and WRDS, CRSP). These materials are typically **not allowed** to be redistributed publicly. Therefore, this repository **does not** include full raw data or full cleaned datasets that contain proprietary transcript text.
 
 ---
@@ -73,11 +73,11 @@ Below are the main data files used/produced in our pipeline.
 
 > Note: The exact column names may differ slightly depending on your export settings,
 
----    **Not finished!!!!!*
+---
 
 ### (B) Small derived samples (optional to upload if allowed)
 
-- **Q&A.xlsx** (or similar)  
+- **Q&A.xlsx** 
   A derived sample of Q&A pairs (e.g., N=1,000) used for method comparisons (Table 2/3),
   typically including:
   - question / answer text (if available)
@@ -85,9 +85,9 @@ Below are the main data files used/produced in our pipeline.
   - model predictions
   - manual labels for a subset (e.g., N=100)
 
-**⚠️ Licensing caution:**  
-If `Q&A.xlsx` contains transcript text (question/answer), it may still be subject to redistribution restrictions.
-If unsure, do NOT publish the text version. Instead, publish a **redacted** version (see Section 6).
+**Caution:**  
+`Q&A.xlsx` contains transcript text (question/answer), we will not upload it.
+
 
 ---
 
@@ -102,23 +102,23 @@ Our sample construction follows the steps reported in the replication report:
    - question length ≥ 30
    - answer length ≥ 10
    - question + answer length ≥ 75
-5. Final sample: 5,471 firms and 166,848 Q&A pairs (see Table 1 in our report)
+5. Final sample: 5,471 firms and 166,848 Q&A pairs (see Table 1 in our output and report)
 
 ---
 
 ## 5) How to reproduce (data pipeline)
 
 ### Step 0 — Put raw files in `data/raw/`
-Place your raw exports (Speaker Details, TranscriptDetails, corporate information, etc.)
+Place your raw exports (Speaker Details, TranscriptDetails, corporate information.)
 into `data/raw/`.
 
-### Step 1 — Run Stata sample construction script
+### Step 1 — Clean the data and run stata sample construction script
 Run:
 - `code/sample construction code.do`
 
 This script creates intermediate datasets and outputs:
 - `Final.dta` (the finalized Q&A-level dataset for sampling/analysis)
-- possibly intermediate files like `Clean_Q&A.dta`, `Clean_1.dta`
+- intermediate files like `Clean_Q&A.dta`, `Clean_1.dta`
 
 ### Step 2 — Draw evaluation/analysis samples
 From `Final.dta`, draw:
@@ -142,21 +142,14 @@ They read the sample file (e.g., `Q&A.xlsx`) and generate the final tables in `o
 - full cleaned datasets containing proprietary transcript text
 - large `.dta` / `.parquet` files
 
-### Upload to GitHub (safe, recommended)
+### Upload to GitHub
 - all code (`code/`)
 - report (`report/`)
 - slides (`slides/`)
-- table outputs (`output/TABLES...xlsx`)
-- **small sample data only if permitted**
-
-If transcript text is not permitted to redistribute:
-- upload `Q&A_redacted.xlsx` instead of `Q&A.xlsx`  
-  where `question` and `answer` columns are removed or masked, keeping:
-  - IDs, lengths, keyword flags, predictions, manual labels.
+- table outputs (`output/TABLES...)
 
 ---
 
 ## 7) Contact / Notes
-If you have licensed access to CapitalIQ/WRDS and need guidance to reproduce the full pipeline,
-please follow the structure above and run the scripts in order.
+If you have licensed access to Capital IQ/WRDS and need guidance to reproduce the full pipeline, please follow the structure above and run the scripts in order.
 
