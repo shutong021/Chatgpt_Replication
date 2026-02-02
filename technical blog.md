@@ -43,7 +43,7 @@ for benchmarking methods.
 
 ### 2.2 Our replication data (licensed sources; access constraints)
 Our replication uses licensed datasets downloaded from:
-- **CapitalIQ** (earnings call transcripts and identifiers), 2013–2022 calendar years
+- **Capital IQ** (earnings call transcripts and identifiers), 2013–2022 calendar years
 - **Speaker/component-level “speaker details”** tables (Question/Answer tags, speaker type, component order)
 - **Corporate information** (industry classification; identifiers)
 
@@ -128,8 +128,12 @@ We implement and compare three families of approaches:
   - reduces cost and latency by limiting LLM calls,
   - reduces false positives compared to keyword-only approaches,
   - makes the pipeline scalable to larger corpora.
-
----
+  - 
+### 5.4 Generate final tables workbook
+- Input: data/samples/Q&A.xlsx (local-only)
+- Run: python code/table_generator.py
+- Output: output/replication_table2_table3_results.xlsx
+Notes: script auto-detects prediction columns; uses Manual as ground truth; outputs Table2_eval / Confusion_eval / Table3_pair_level sheets
 
 ## 6) What we replicate vs. what we add (differences from the original paper)
 
